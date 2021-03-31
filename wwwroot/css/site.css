@@ -165,7 +165,8 @@ background: linear-gradient(to bottom, #240b36aa, #c314315b),url(/img/inicio.jpg
 .cuerpo-back{
     background-color: white;
     padding: 60px;
-    margin-top: 50px;
+    margin-top: 70px;
+    margin-bottom: 70px;
 }
 
 .card-img-top{
