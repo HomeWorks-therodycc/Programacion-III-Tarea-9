@@ -20,6 +20,7 @@ namespace Tarea7.Data.Models
         public virtual DbSet<Provincia> Provincias { get; set; }
         public virtual DbSet<Vacuna> Vacunas { get; set; }
         public virtual DbSet<Vacunado> Vacunados { get; set; }
+        public virtual DbSet<Solicitante> Solicitantes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

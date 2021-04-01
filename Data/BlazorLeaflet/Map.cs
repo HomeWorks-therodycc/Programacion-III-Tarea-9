@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace BlazorLeaflet
 {
+    #pragma warning disable
     public class Map
     {
         /// <summary>
