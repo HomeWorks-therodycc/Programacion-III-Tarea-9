@@ -24,7 +24,8 @@ namespace Tarea7.Data.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlite("Data Source=vacuna.db");
+                // optionsBuilder.UseSqlite("Data Source=vacuna.db");
+                optionsBuilder.UseMySQL("server=db4free.net; port=3306; user=jeer_prog; password=grop_reej; database=vacunas");
             }
         }
     }

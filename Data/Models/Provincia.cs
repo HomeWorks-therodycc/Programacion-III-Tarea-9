@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-#nullable disable
-
 namespace Tarea7.Data.Models
 {
     public partial class Provincia
