@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Tarea9.Data.Models;
 
-#nullable disable
-
-namespace Tarea7.Data.Models
+namespace Tarea9.Data
 {
     public partial class vacunaContext : DbContext
     {
@@ -25,7 +24,7 @@ namespace Tarea7.Data.Models
             if (!optionsBuilder.IsConfigured)
             {
                 // optionsBuilder.UseSqlite("Data Source=vacuna.db");
-                optionsBuilder.UseMySQL("server=db4free.net; port=3306; user=jeer_prog; password=grop_reej; database=vacunas");
+                optionsBuilder.UseMySQL("server=db4free.net; port=3306; user=jeer_prog; password=gorp_reej; database=vacunas");
             }
         }
     }

@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tarea7.Data.Models
+namespace Tarea9.Data.Models
 {
 
   [Table("Solicitantes")]

@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Tarea7.Data.Models;
+using Tarea9.Data;
 
-namespace Tarea7.Migrations
+namespace Tarea9.Migrations
 {
     [DbContext(typeof(vacunaContext))]
     [Migration("20210402023743_initial")]
@@ -19,7 +19,7 @@ namespace Tarea7.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.3");
 
-            modelBuilder.Entity("Tarea7.Data.Models.Provincia", b =>
+            modelBuilder.Entity("Tarea9.Data.Models.Provincia", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,7 +33,7 @@ namespace Tarea7.Migrations
                     b.ToTable("Provincias");
                 });
 
-            modelBuilder.Entity("Tarea7.Data.Models.Solicitante", b =>
+            modelBuilder.Entity("Tarea9.Data.Models.Solicitante", b =>
                 {
                     b.Property<byte[]>("Id")
                         .ValueGeneratedOnAdd()
@@ -94,9 +94,9 @@ namespace Tarea7.Migrations
                     b.ToTable("Solicitantes");
                 });
 
-            modelBuilder.Entity("Tarea7.Data.Models.Solicitante", b =>
+            modelBuilder.Entity("Tarea9.Data.Models.Solicitante", b =>
                 {
-                    b.HasOne("Tarea7.Data.Models.Provincia", "Provincia")
+                    b.HasOne("Tarea9.Data.Models.Provincia", "Provincia")
                         .WithMany()
                         .HasForeignKey("ProvinciaId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -10,9 +10,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Tarea7.Data.Models;
+using Tarea9.Data;
 
-namespace Tarea7
+namespace Tarea9
 {
     public class Startup
     {

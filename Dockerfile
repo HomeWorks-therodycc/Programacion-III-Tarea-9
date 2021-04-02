@@ -20,4 +20,4 @@ COPY --from=build-env /app/out .
 # Use your project name for the second parameter
 # e.g. MyProject.dll
 # ENTRYPOINT [ "dotnet", "prueba.dll" ]
-CMD ASPNETCORE_URLS=http://*:$PORT dotnet Tarea7.dll
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet Tarea9.dll
