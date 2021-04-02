@@ -1,26 +1,34 @@
 @page "/solicitud/{Id:guid}"
 
 <div class="text-center">
-  <h4>@solicitante.Cedula</h4>
-  <h3>@solicitante.Nombre @solicitante.Apellido</h3>
-  <h4>@solicitante.FechaNacimiento.ToShortDateString() - @solicitante.Provincia.Nombre</h4>
-  <br>
+  @if (solicitante != null) {
+    <h4>@solicitante.Cedula</h4>
+    <h3>@solicitante.Nombre @solicitante.Apellido</h3>
+    <h4>@solicitante.FechaNacimiento.ToShortDateString() - @solicitante.Provincia.Nombre</h4>
+    <br>
 
-  <div style="height: 300px" class="w-100 mb-1">
-    <LeafletMap Map="mapa" />
-  </div>
-  <h4>@solicitante.Direccion</h4>
-  <h5>@solicitante.Telefono | @solicitante.Correo</h5>
-  <br>
+    <div style="height: 300px" class="w-100 mb-1">
+      <LeafletMap Map="mapa" />
+    </div>
+    <h4>@solicitante.Direccion</h4>
+    <h5>@solicitante.Telefono | @solicitante.Correo</h5>
+    <br>
 
-  <h5>Covid: @(solicitante.HaTenidoCovid ? "Positivo" : "Negativo")</h5>
-  <h6>@solicitante.Justificacion</h6>
-  <br>
+    <h5>Covid: @(solicitante.HaTenidoCovid ? "Positivo" : "Negativo")</h5>
+    <h6>@solicitante.Justificacion</h6>
+    <br>
 
-  <h6>
-    Id de la Solicitud: 
-    <a href="@nm.Uri">@solicitante.Id</a>
-  </h6>
+    <h6>
+      Id de la Solicitud: 
+      <a href="@nm.Uri">@solicitante.Id</a>
+    </h6>
+  }
+  else {
+    <div class="text-center text-danger">
+      <h3>Solicitud Invalida</h3>
+      <h5>No existe ninguna solicitud con ese Id</h5>
+    </div>
+  }
 </div>
 
 @code
@@ -35,7 +43,13 @@
 
   protected override void OnInitialized()
   {
-    solicitante = vc.Solicitantes.Include("Provincia").First(x => x.Id == Id);
+    try {
+      solicitante = vc.Solicitantes.Include("Provincia").First(x => x.Id == Id);
+    }
+    catch (Exception e) {
+      @* Console.WriteLine(e); *@
+      return;
+    }
 
     mapa = new Map(jsr) {
       Center = new LatLng(solicitante.Latitud, solicitante.Longitud),

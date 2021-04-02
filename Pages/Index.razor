@@ -1,196 +1,254 @@
 @page "/"
 
 
-
 <h3 class="titulocantvacuna">Vacúnate a domicilio!</h3>
 
-@* <br>
-<div class="input-group w-50">
-    <label for="cedula" class="input-group-text">Cedula</label>
-    <input id="cedula" type="text" @bind-value="cedulaInput" class="form-control" maxlength="11">
-    <div class="input-group-append">
-        <button @onclick="parseaCedula" class="btn btn-success">Buscar</button>
+<div>
+    @if (solicitanteExistente == null) {
+        <EditForm Model="solicitante" OnValidSubmit="ValidSubmit" OnInvalidSubmit="InvalidSubmit">
+            <DataAnnotationsValidator />
+
+
+            <h4>Cedula</h4>
+            <InputText @bind-Value="solicitante.Cedula" class="form-control" />
+            <br>
+
+            <h4>Nombre</h4>
+            <InputText @bind-Value="solicitante.Nombre" class="form-control" />
+            <br>
+
+            <h4>Apellido</h4>
+            <InputText @bind-Value="solicitante.Apellido" class="form-control" />
+            <br>
+
+            <h4>Telefono</h4>
+            <InputText @bind-Value="solicitante.Telefono" class="form-control" />
+            <br>
+
+            <h4>Correo</h4>
+            <InputText @bind-Value="solicitante.Correo" class="form-control" />
+            <br>
+
+            <h4>Fecha de nacimiento</h4>
+            <InputDate @bind-Value="solicitante.FechaNacimiento" class="form-control" />
+            <br>
+
+            <h4>Tipo de Sangre</h4>
+            <InputSelect @bind-Value="solicitante.Sangre" class="form-control">
+                <option value=""></option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+            </InputSelect>
+            <br>
+
+            <h4>Provincia</h4>
+            <InputSelect @bind-Value="solicitante.ProvinciaId" class="form-control">
+                <option value=""></option>
+                @foreach (var p in vc.Provincias)
+                {
+                    <option value="@p.Id">@p.Nombre</option>
+                }
+            </InputSelect>
+            <br>
+
+            <h4>Direccion</h4>
+            <InputText @bind-Value="solicitante.Direccion" class="form-control" />
+            <br>
+
+            <h4>Ubicación</h4>
+            <div style="height: 300px" class="w-100">
+                <LeafletMap Map="mapa" />
+            </div>
+            <br>
+
+            <h4>Le ha dado el Covid?</h4>
+            <InputCheckbox @bind-Value="solicitante.HaTenidoCovid" class="form-control" />
+            <br>
+
+            <h4>Porque deberia ser solicitud a domicilio?</h4>
+            <InputTextArea @bind-Value="solicitante.Justificacion" class="form-control" rows="4" />
+            <br>
+
+            <div class="mx-auto w-50">
+                <ValidationSummary />
+                <ul>
+                    @foreach (var error in errores)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+            <br>
+
+            <div class="mx-auto w-50">
+                <button type="submit" class="w-100 btn btn-secondary">Enviar Solicitud</button>
+            </div>
+            <br>
+
+        </EditForm>
+    }
+    else {
+        <div class="text-center text-danger">
+            <h3>Usted ya ha sido registrado</h3>
+            <br>
+            <a href="/solicitud/@solicitanteExistente.Id">
+                <h5>@solicitanteExistente.Id</h5>
+            </a>
+        </div>
+    }
+</div>
+
+<br>
+<br>
+<hr>
+<br>
+
+<h4 class="text-center">Creadores</h4>
+<br>
+<h3 class="text-center">JEER-PROG</h3>
+<br>
+<div class="card-deck text-center">
+    <div class="card">
+        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+        <div class="card-body">
+            <h5 class="card-title">Rody Castro Cuello</h5>
+        </div>
+    </div>
+    <div class="card">
+        @* <img class="card-img-top img-thumbnail" src="img/creadores/ezequiel-perez.jpg"> *@
+        <div class="card-body">
+            <h5 class="card-title">Ezequiel Perez R.</h5>
+            <h6>2016-7883</h6>
+        </div>
+    </div>
+    <div class="card">
+        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+        <div class="card-body">
+            <h5 class="card-title">Jeremi AC</h5>
+        </div>
+    </div>
+    <div class="card">
+        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+        <div class="card-body">
+            <h5 class="card-title">Elian A. Martinez Cuevas</h5>
+        </div>
     </div>
 </div>
-<br> *@
-  <EditForm Model="solicitante" OnValidSubmit="ValidSubmit">
-    <DataAnnotationsValidator />
-
-
-    <h4>Cedula</h4>
-    <InputText @bind-Value="solicitante.Cedula" class="form-control" />
-    <br>
-    
-    <h4>Nombre</h4>
-    <InputText @bind-Value="solicitante.Nombre" class="form-control" />
-    <br>
-    
-    <h4>Apellido</h4>
-    <InputText @bind-Value="solicitante.Apellido" class="form-control" />
-    <br>
-    
-    <h4>Telefono</h4>
-    <InputText @bind-Value="solicitante.Telefono" class="form-control" />
-    <br>
-    
-    <h4>Correo</h4>
-    <InputText @bind-Value="solicitante.Correo" class="form-control" />
-    <br>
-    
-    <h4>Fecha de nacimiento</h4>
-    <InputDate @bind-Value="solicitante.FechaNacimiento" class="form-control" />
-    <br>
-    
-    <h4>Tipo de Sangre</h4>
-    <InputSelect @bind-Value="solicitante.Sangre" class="form-control">
-      <option value=""></option>
-      <option value="A+">A+</option>
-      <option value="A-">A-</option>
-      <option value="B+">B+</option>
-      <option value="B-">B-</option>
-      <option value="AB+">AB+</option>
-      <option value="AB-">AB-</option>
-      <option value="O+">O+</option>
-      <option value="O-">O-</option>
-    </InputSelect>
-    <br>
-    
-    <h4>Provincia</h4>
-    <InputSelect @bind-Value="solicitante.ProvinciaId" class="form-control">
-      <option value=""></option>
-      @foreach (var p in vc.Provincias)
-      {
-        <option value="@p.Id">@p.Nombre</option>
-      }
-    </InputSelect>
-    <br>
-    
-    <h4>Direccion</h4>
-    <InputText @bind-Value="solicitante.Direccion" class="form-control" />
-    <br>
-
-    <h4>Ubicación</h4>
-    <div style="height: 300px" class="w-100">
-      <LeafletMap Map="mapa" />
-    </div>
-    <br>
-    
-    <h4>Le ha dado el Covid?</h4>
-    <InputCheckbox @bind-Value="solicitante.HaTenidoCovid" class="form-control" />
-    <br>
-    
-    <h4>Porque deberia ser solicitud a domicilio?</h4>
-    <InputTextArea @bind-Value="solicitante.Justificacion" class="form-control" rows="4" />
-    <br>
-
-    <div class="mx-auto w-50">
-      <ValidationSummary />
-      <ul>
-        @foreach (var error in errores)
-        {
-          <li>@error</li>
-        }
-      </ul>
-    </div>
-    <br>
-
-    <div class="mx-auto w-50">
-      <button type="submit" class="w-100 btn btn-secondary">Enviar Solicitud</button>
-    </div>
-    <br>
-
-</EditForm>
 
 
 @code
 {
-  private Solicitante solicitante = new Solicitante();
-  private List<string> errores = new List<string>();
-  
-  private Map mapa = null;
-  private Marker uSolicitor = null;
+    private Solicitante solicitante = new Solicitante();
+    private List<string> errores = new List<string>();
+    private Solicitante solicitanteExistente = null;
 
-  private void ValidSubmit() {
-    if (!Functions.ValidaCedula(solicitante.Cedula)) {
-      errores.Add("La cedula ingresada no es valida");
-      return;
-    }
+    private Map mapa = null;
+    private Marker uSolicitante = null;
 
-    vc.Add(solicitante);
-    vc.SaveChanges();
-    SendMail();
-  }
-
-  protected override void OnInitialized()
-  {
-    mapa = new Map(jsr) {
-      Center = new LatLng(18.9f, -70f),
-      Zoom = 7.47f
-    };
-
-    uSolicitor = new Marker(19.5f, -69.65f) {
-      Draggable = true,
-      Title = "Selecciona tu ubicacion"
-    };
-
-    mapa.OnInitialized += () => {
-      mapa.AddLayer(new TileLayer {                
-        UrlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-        Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
-      });
-      mapa.AddLayer(uSolicitor);
-    };
-
-    mapa.OnClick += (Map sender, MouseEvent e) => {
-      solicitante.Latitud = e.LatLng.Lat;
-      solicitante.Longitud = e.LatLng.Lng;
-      uSolicitor.Position = e.LatLng;
-      mapa.RemoveLayer(uSolicitor);
-      mapa.AddLayer(uSolicitor);
-    };
-
-    uSolicitor.OnDrag += (Marker sender, DragEvent e) => {
-      solicitante.Latitud = e.LatLng.Lat;
-      solicitante.Longitud = e.LatLng.Lng;
-    };
-  }
-
-  private void SendMail() {
-    try {
-      using (MailMessage mail = new MailMessage()) {
-        mail.From = new MailAddress("tarea.vacunate.rd@gmail.com", "Vacúnate RD");
-        mail.To.Add(solicitante.Correo);
-
-        mail.Subject = $"Registro Vacunate RD | {solicitante.Id}";
-        mail.Body = String.Format(HtmlTemplates.Solicitante, 
-          solicitante.Cedula, 
-          solicitante.Nombre, 
-          solicitante.Apellido, 
-          solicitante.FechaNacimiento.ToShortDateString(), 
-          solicitante.Provincia.Nombre, 
-          solicitante.Latitud, 
-          solicitante.Longitud, 
-          solicitante.Direccion, 
-          solicitante.Telefono, 
-          solicitante.Correo, 
-          solicitante.HaTenidoCovid? "Positivo":"Negativo", 
-          solicitante.Justificacion, 
-          nm.Uri, 
-          solicitante.Id
-        );
-        mail.IsBodyHtml = true;
-
-        using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587)) {
-          smtp.Credentials = new NetworkCredential("tarea.vacunate.rd@gmail.com", "trhgftay5345");
-          smtp.EnableSsl = true;
-          smtp.Send(mail);
-          
-          nm.NavigateTo($"/solicitud/{solicitante.Id}");
+    private void ValidSubmit()
+    {
+        if (!Functions.ValidaCedula(solicitante.Cedula)) {
+            errores.Add("La cedula ingresada no es valida");
+            return;
         }
-      }
+
+        solicitanteExistente = vc.Solicitantes.FirstOrDefault(x => x.Cedula == solicitante.Cedula);
+        if (solicitanteExistente != null) return;
+
+        vc.Add(solicitante);
+        vc.SaveChanges();
+        SendMail();
+        nm.NavigateTo($"/solicitud/{solicitante.Id}");
     }
-    catch (Exception e) {
-      Console.WriteLine(e.Message);
+
+    private void InvalidSubmit() {
+        solicitanteExistente = vc.Solicitantes.FirstOrDefault(x => x.Cedula == solicitante.Cedula);
+        if (solicitanteExistente != null) return;
     }
-  }
+
+    protected override void OnInitialized()
+    {
+        mapa = new Map(jsr)
+        {
+            Center = new LatLng(18.9f, -70f),
+            Zoom = 7.47f
+        };
+
+        uSolicitante = new Marker(19.5f, -69.65f)
+        {
+            Draggable = true,
+            Title = "Selecciona tu ubicacion"
+        };
+
+        mapa.OnInitialized += () =>
+            {
+            mapa.AddLayer(new TileLayer
+            {
+                UrlTemplate = "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                Attribution = "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            });
+            mapa.AddLayer(uSolicitante);
+        };
+
+        mapa.OnClick += (Map sender, MouseEvent e) =>
+            {
+            solicitante.Latitud = e.LatLng.Lat;
+            solicitante.Longitud = e.LatLng.Lng;
+            uSolicitante.Position = e.LatLng;
+            mapa.RemoveLayer(uSolicitante);
+            mapa.AddLayer(uSolicitante);
+        };
+
+        uSolicitante.OnDrag += (Marker sender, DragEvent e) =>
+            {
+            solicitante.Latitud = e.LatLng.Lat;
+            solicitante.Longitud = e.LatLng.Lng;
+        };
+    }
+
+    private void SendMail()
+    {
+        try
+        {
+            using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("tarea.vacunate.rd@gmail.com", "Vacúnate RD");
+                mail.To.Add(solicitante.Correo);
+
+                mail.Subject = $"Registro Vacunate RD | {solicitante.Id}";
+                mail.Body = String.Format(HtmlTemplates.Solicitante,
+                    solicitante.Cedula,
+                    solicitante.Nombre,
+                    solicitante.Apellido,
+                    solicitante.FechaNacimiento.ToShortDateString(),
+                    solicitante.Provincia.Nombre,
+                    solicitante.Latitud,
+                    solicitante.Longitud,
+                    solicitante.Direccion,
+                    solicitante.Telefono,
+                    solicitante.Correo,
+                    solicitante.HaTenidoCovid ? "Positivo" : "Negativo",
+                    solicitante.Justificacion,
+                    nm.Uri,
+                    solicitante.Id
+                    );
+                mail.IsBodyHtml = true;
+
+                smtp.Credentials = new NetworkCredential("tarea.vacunate.rd@gmail.com", "trhgftay5345");
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
 }
