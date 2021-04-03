@@ -157,10 +157,23 @@ background: linear-gradient(to bottom, #240b36aa, #c314315b),url(/img/inicio.jpg
     background-size: cover;
     background-position: center;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: space-evenly;
+    align-items: center;
+
+    overflow: hidden;
 
 }
+
+header img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    object-fit: cover;
+    box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.987);
+}
+
+
 
 .cuerpo-back{
     background-color: white;
