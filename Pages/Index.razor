@@ -68,11 +68,12 @@
             <br>
 
             <h4>Le ha dado el Covid?</h4>
+            <i><p>(Favor marcar la casilla solo si le ha dado el COVID-19)</p></i>
             <InputCheckbox @bind-Value="solicitante.HaTenidoCovid" class="form-control" />
             <br>
 
-            <h4>Porque deberia ser solicitud a domicilio?</h4>
-            <InputTextArea @bind-Value="solicitante.Justificacion" class="form-control" rows="4" />
+            <h4>¿Por qué deberia ser vacunado a domicilio?</h4>
+            <InputTextArea @bind-Value="solicitante.Justificacion" class="form-control" rows="4"  />
             <br>
 
             <div class="mx-auto w-50">
@@ -92,6 +93,7 @@
             <br>
 
         </EditForm>
+        
     }
     else {
         <div class="text-center text-danger">
@@ -118,14 +120,14 @@
         @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
         <div class="card-body">
             <h5 class="card-title">Rody Castro Cuello</h5>
-            <h6>2018-6753</h6>
+            <i><h6>2018-6753</h6></i>
         </div>
     </div>
     <div class="card">
         @* <img class="card-img-top img-thumbnail" src="img/creadores/ezequiel-perez.jpg"> *@
         <div class="card-body">
             <h5 class="card-title">Ezequiel Perez R.</h5>
-            <h6>2016-7883</h6>
+            <i><h6>2016-7883</h6></i>
         </div>
     </div>
     <div class="card">
@@ -136,10 +138,10 @@
         </div>
     </div>
     <div class="card">
-        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+         @*<img class="card-img-top" src="C:/Users/HP 15-BS191DX/Documents/Captura.PNG" alt="Card image cap"> *@
         <div class="card-body">
             <h5 class="card-title">Elian A. Martinez Cuevas</h5>
-            <h6></h6>
+            <i><h6>2019-7817</h6></i>
         </div>
     </div>
 </div>
@@ -147,7 +149,7 @@
 
 @code
 {
-    private Solicitante solicitante = new Solicitante();
+       private Solicitante solicitante = new Solicitante();
     private List<string> errores = new List<string>();
     private Solicitante solicitanteExistente = null;
 
