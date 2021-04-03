@@ -141,10 +141,13 @@ a, .btn-link {
     font-size: 25px;
     color:rgb(78, 78, 78);
     margin-bottom: 50px;
-    margin-top: 30px;
+    margin-top: -90px;
     border-radius: 40px;
-    box-shadow:0 0 10px 0 rgba(0, 0, 0, 0.308);
-    padding: 14px 25px;
+    box-shadow:0 0 29px 0 rgba(0, 0, 0, 0.575);
+    padding: 30px 45px;
+    background-color: white;
+    animation: swing;
+    animation-duration: 3s;
 }
 
 header{
@@ -161,6 +164,7 @@ background: linear-gradient(to bottom, #240b36aa, #c314315b),url(/img/inicio.jpg
     align-items: center;
 
     overflow: hidden;
+    z-index: -1;
 
 }
 
@@ -168,7 +172,6 @@ header img{
     width: 200px;
     height: 200px;
     border-radius: 50%;
-
     object-fit: cover;
     box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.987);
 }
@@ -178,8 +181,11 @@ header img{
 .cuerpo-back{
     background-color: white;
     padding: 60px;
-    margin-top: 70px;
+    margin-top: -40px;
     margin-bottom: 70px;
+    animation: heartBeat;
+    animation-duration: 3s;
+
 }
 
 .card-img-top{
