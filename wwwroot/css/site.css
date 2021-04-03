@@ -17,7 +17,7 @@ html, body {
     background: #c31432;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom, #240b36, #c31432); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
+    transition: 2s ease all;
 }
 
 a, .btn-link {
@@ -146,8 +146,9 @@ a, .btn-link {
     box-shadow:0 0 29px 0 rgba(0, 0, 0, 0.575);
     padding: 30px 45px;
     background-color: white;
-    animation: swing;
-    animation-duration: 3s;
+    animation: heartBeat;
+    animation-duration: 5s;
+   transition: 2s ease all;
 }
 
 header{
@@ -162,7 +163,7 @@ background: linear-gradient(to bottom, #240b36aa, #c314315b),url(/img/inicio.jpg
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-
+    transition: 2s ease all;
     overflow: hidden;
     z-index: -1;
 
@@ -184,7 +185,8 @@ header img{
     margin-top: -40px;
     margin-bottom: 70px;
     animation: heartBeat;
-    animation-duration: 3s;
+    animation-duration: 5s;
+    transition: 2s ease all;
 
 }
 
