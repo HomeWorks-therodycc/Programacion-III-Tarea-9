@@ -1,10 +1,16 @@
 @page "/"
 
 
-<h3 class="titulocantvacuna">Vacúnate a domicilio!</h3>
+<h3 class="titulocantvacuna text-center">Vacúnate a domicilio!</h3>
 
 <div>
-    @if (solicitanteExistente == null) {
+    @if (cargando) {
+        <div class="d-flex mx-auto justify-content-center align-items-center">
+            <img src="https://acegif.com/wp-content/uploads/loading-25.gif" width="50px">
+            <h3 class="mb-0"><i>Cargando...</i></h3>
+        </div>
+    }
+    else if (solicitanteExistente == null) {
         <EditForm Model="solicitante" OnValidSubmit="ValidSubmit" OnInvalidSubmit="InvalidSubmit">
             <DataAnnotationsValidator />
 
@@ -49,8 +55,8 @@
 
             <h4>Provincia</h4>
             <InputSelect @bind-Value="solicitante.ProvinciaId" class="form-control">
-                <option value=""></option>
-                @foreach (var p in vc.Provincias)
+                <option value="" disabled></option>
+                @foreach (var p in provincias)
                 {
                     <option value="@p.Id">@p.Nombre</option>
                 }
@@ -67,7 +73,7 @@
             </div>
             <br>
 
-            <h4>Le ha dado el Covid?</h4>
+            <h4>¿Le ha dado el Covid?</h4>
             <i><p>(Favor marcar la casilla solo si le ha dado el COVID-19)</p></i>
             <InputCheckbox @bind-Value="solicitante.HaTenidoCovid" class="form-control" />
             <br>
@@ -111,37 +117,39 @@
 <hr>
 <br>
 
-<h4 class="text-center">Creadores</h4>
-<br>
-<h3 class="text-center">JEER-PROG</h3>
-<br>
-<div class="card-deck text-center">
-    <div class="card">
-        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
-        <div class="card-body">
-            <h5 class="card-title">Rody Castro Cuello</h5>
-            <i><h6>2018-6753</h6></i>
+<div>
+    <h4 class="text-center">Creadores</h4>
+    <br>
+    <h3 class="text-center">JEER-PROG</h3>
+    <br>
+    <div class="card-deck text-center">
+        <div class="card">
+            @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+            <div class="card-body">
+                <h5 class="card-title">Rody Castro Cuello</h5>
+                <i><h6>2018-6753</h6></i>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        @* <img class="card-img-top img-thumbnail" src="img/creadores/ezequiel-perez.jpg"> *@
-        <div class="card-body">
-            <h5 class="card-title">Ezequiel Perez R.</h5>
-            <i><h6>2016-7883</h6></i>
+        <div class="card">
+            @* <img class="card-img-top img-thumbnail" src="img/creadores/ezequiel-perez.jpg"> *@
+            <div class="card-body">
+                <h5 class="card-title">Ezequiel Perez R.</h5>
+                <i><h6>2016-7883</h6></i>
+            </div>
         </div>
-    </div>
-    <div class="card">
-        @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
-        <div class="card-body">
-            <h5 class="card-title">Jeremi AC</h5>
-            <h6></h6>
+        <div class="card">
+            @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
+            <div class="card-body">
+                <h5 class="card-title">Jeremi AC</h5>
+                <h6></h6>
+            </div>
         </div>
-    </div>
-    <div class="card">
-         @*<img class="card-img-top" src="C:/Users/HP 15-BS191DX/Documents/Captura.PNG" alt="Card image cap"> *@
-        <div class="card-body">
-            <h5 class="card-title">Elian A. Martinez Cuevas</h5>
-            <i><h6>2019-7817</h6></i>
+        <div class="card">
+            @*<img class="card-img-top" src="C:/Users/HP 15-BS191DX/Documents/Captura.PNG" alt="Card image cap"> *@
+            <div class="card-body">
+                <h5 class="card-title">Elian A. Martinez Cuevas</h5>
+                <i><h6>2019-7817</h6></i>
+            </div>
         </div>
     </div>
 </div>
@@ -149,36 +157,59 @@
 
 @code
 {
-       private Solicitante solicitante = new Solicitante();
-    private List<string> errores = new List<string>();
+    private Solicitante solicitante = new Solicitante();
     private Solicitante solicitanteExistente = null;
+
+    private List<Provincia> provincias = null;
+
+    private List<string> errores = new List<string>();
+    private bool cargando = true;
 
     private Map mapa = null;
     private Marker uSolicitante = null;
 
-    private void ValidSubmit()
+    private async Task ValidSubmit()
     {
         if (!Functions.ValidaCedula(solicitante.Cedula)) {
             errores.Add("La cedula ingresada no es valida");
             return;
         }
 
-        solicitanteExistente = vc.Solicitantes.FirstOrDefault(x => x.Cedula == solicitante.Cedula);
-        if (solicitanteExistente != null) return;
+
+        cargando = true;
+        StateHasChanged();
+        solicitanteExistente = await vc.Solicitantes.FirstOrDefaultAsync(x => x.Cedula == solicitante.Cedula);
+        if (solicitanteExistente != null) {
+            cargando = false;
+            StateHasChanged();
+            return;
+        }
 
         vc.Add(solicitante);
         vc.SaveChanges();
+
         SendMail();
+        cargando = false;
+        StateHasChanged();
+
         nm.NavigateTo($"/solicitud/{solicitante.Id}");
     }
 
     private void InvalidSubmit() {
         solicitanteExistente = vc.Solicitantes.FirstOrDefault(x => x.Cedula == solicitante.Cedula);
-        if (solicitanteExistente != null) return;
+        if (solicitanteExistente != null) {
+            cargando = false;
+            StateHasChanged();
+            return;
+        }
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        provincias = await vc.Provincias.ToListAsync();
+        cargando = false;
+        StateHasChanged();
+
         mapa = new Map(jsr)
         {
             Center = new LatLng(18.9f, -70f),
