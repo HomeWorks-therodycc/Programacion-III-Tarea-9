@@ -1,13 +1,13 @@
 @page "/"
 
 
-<h3 class="titulocantvacuna text-center">Vacúnate a domicilio!</h3>
+<h3 class="titulocantvacuna text-center">Vacúnate a Domicilio!</h3>
 
 <div>
     @if (cargando) {
         <div class="d-flex mx-auto justify-content-center align-items-center">
             <img src="https://acegif.com/wp-content/uploads/loading-25.gif" width="50px">
-            <h3 class="mb-0"><i>Cargando...</i></h3>
+            <h3 class="mb-0"><i>Cargando....</i></h3>
         </div>
     }
     else if (solicitanteExistente == null) {
@@ -35,7 +35,7 @@
             <InputText @bind-Value="solicitante.Correo" class="form-control" />
             <br>
 
-            <h4>Fecha de nacimiento</h4>
+            <h4>Fecha de Nacimiento</h4>
             <InputDate @bind-Value="solicitante.FechaNacimiento" class="form-control" />
             <br>
 
@@ -78,7 +78,7 @@
             <InputCheckbox @bind-Value="solicitante.HaTenidoCovid" class="form-control" />
             <br>
 
-            <h4>¿Por qué deberia ser vacunado a domicilio?</h4>
+            <h4>¿Porqué deberia ser vacunado a domicilio?</h4>
             <InputTextArea @bind-Value="solicitante.Justificacion" class="form-control" rows="4"  />
             <br>
 
@@ -103,7 +103,7 @@
     }
     else {
         <div class="text-center text-danger">
-            <h3>Usted ya ha sido registrado</h3>
+            <h3>Usted ya ha sido Registrado</h3>
             <br>
             <a href="/solicitud/@solicitanteExistente.Id">
                 <h5>@solicitanteExistente.Id</h5>
@@ -140,8 +140,8 @@
         <div class="card">
             @* <img class="card-img-top" src="https://adsib.gob.bo/api/adjuntos/0d3536f0-3f10-11eb-bff1-c1ba4fcb6d6a.png" alt="Card image cap"> *@
             <div class="card-body">
-                <h5 class="card-title">Jeremi AC</h5>
-                <h6></h6>
+                <h5 class="card-title">Jeremi Acevedo D.</h5>
+                <h6>2017-5514</h6>
             </div>
         </div>
         <div class="card">

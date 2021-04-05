@@ -4,7 +4,7 @@
     @if (cargando) {
         <div class="d-flex mx-auto justify-content-center align-items-center">
             <img src="https://acegif.com/wp-content/uploads/loading-25.gif" width="50px">
-            <h3 class="mb-0"><i>Cargando...</i></h3>
+            <h3 class="mb-0"><i>Cargando....</i></h3>
         </div>
     }
     else if (solicitante != null) {
@@ -25,14 +25,14 @@
         <br>
 
         <h6>
-            Id de la Solicitud:
+            Id de la Solicitud :
             <a href="@nm.Uri">@solicitante.Id</a>
         </h6>
     }
   else {
     <div class="text-center text-danger">
       <h3>Solicitud Invalida</h3>
-      <h5>No existe ninguna solicitud con ese Id</h5>
+      <h5>No existe ninguna Solicitud con ese Id</h5>
     </div>
   }
 </div>
